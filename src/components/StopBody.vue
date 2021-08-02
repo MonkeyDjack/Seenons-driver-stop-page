@@ -1,0 +1,51 @@
+<template>
+    <div class="stop-body">
+        <div class="stop-body-header">
+            <h2 class="poppins-font">Stop general information</h2>
+        </div>
+        <div class="stop-info" v-for="stop in stopData.stops" :key="stop.stop_id" >
+            <div v-if="stop.stop_id == 1">
+                <p>Telephone:{{stop.telephone}} </p>
+                <p>House number:{{stop.address.house_number}} </p>
+                <p>Street: {{stop.address.street}}</p>
+                <p>Town: {{stop.address.town}}</p>
+                <p>Postal Code: {{stop.address.postal_code}}</p>
+                <p>Country: {{stop.address.country}}</p>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import stopData from "../json/driver_route_sample.json"
+    export default{
+        name: 'StopBody',
+        data(){
+            return{
+                stopData: stopData,
+            };
+        },
+       
+        
+
+    };
+</script>
+
+<style scoped>
+.stop-body{
+    background: #fff;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.stop-body-header{
+    background: #F4FCFB;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding: 20px 0px 20px 0px;
+}
+
+.stop-body-header h2{
+    margin: 10px;
+    color: black;
+}
+</style>

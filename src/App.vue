@@ -1,19 +1,28 @@
 <template>
   <Header/>
+  <StopBody/>
 </template>
 
 <script>
 import Header from './components/Header.vue'
-
+import StopBody from './components/StopBody.vue'
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    StopBody,
   }
 }
 </script>
 
 <style>
+body{
+  margin: 0;
+}
+.poppins-font{
+  font-family: 'Poppins', 'arial';
+
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
