@@ -4,15 +4,20 @@
 
             <img src="../assets/img/avatar-empty.png" alt="avatar" class="avatar">
         </div>
-        <h2 class="place_name poppins-font">Place Name</h2>
+        <div v-for="stop in stopData.stops" :key="stop.stop_id">
+            <h2 class="place_name poppins-font"  v-if="stop.stop_id == 2">{{stop.name}}</h2>
+        </div>
+        
     </div>
 </template>
 
 <script>
-export default {
-  name: 'Header',
-  
-}
+export default{
+    name: 'Header',
+    props:{
+        stopData: Object,
+    }
+};
 </script>
 
 <style scoped>
