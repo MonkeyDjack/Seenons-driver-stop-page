@@ -1,6 +1,6 @@
 <template>
-    <div class="stop-body">
-        <div class="stop-body-header">
+    <div class="stop-body round">
+        <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
         </div>
         <div class="stop-info" v-for="stop in stopData.stops" :key="stop.stop_id" >
@@ -12,6 +12,10 @@
                 <p>Town: {{stop.address.town}}</p>
                 <p>Postal Code: {{stop.address.postal_code}}</p>
                 <p>Country: {{stop.address.country}}</p>
+
+                <div class="stop-body-header round">
+            <h2 class="poppins-font" >ORDERS</h2>
+        </div>
             
             <OrderCard :stop="stop" />
             </div>
@@ -43,13 +47,13 @@ export default{
 <style scoped>
 .stop-body{
     background: #fff;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
 }
+
+
+
 .stop-body-header{
     background: #F4FCFB;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
+   
     padding: 20px 0px 20px 0px;
 }
 

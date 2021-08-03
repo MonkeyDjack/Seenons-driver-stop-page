@@ -29,8 +29,17 @@ body{
   font-family: 'Poppins', 'arial';
 
 }
+.round{
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.shadow-box{
+  box-shadow: 1px 2px 84px -18px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 1px 2px 84px -18px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 2px 84px -18px rgba(0,0,0,0.75);   
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', 'arial';;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
