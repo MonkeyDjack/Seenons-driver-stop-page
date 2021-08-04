@@ -27,6 +27,7 @@ export default{
 }
 .avatar{
     width: 120px;
+    height: 100px;
 }
 
 .place_name{

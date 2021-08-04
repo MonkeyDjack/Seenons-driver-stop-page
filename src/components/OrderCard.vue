@@ -1,14 +1,16 @@
 <template>
-    <div class="order-card round" v-for="order in stop.orders" :key="order.order_id">
+    <div class="order-card round clearfix" v-for="order in stop.orders" :key="order.order_id">
         <div  :class="[isRotated ? 'flip-card-inner-rotate' : '',  'flip-card-inner round clearfix']">
             <div class="flip-card-front">
-                <img src="" alt="">
+                <div class="order-card-image round">
+                    <img :src="`../../img/orderImg_id${order.stream_product_id}.png`"  />
+                </div>
                 <h3>{{order.stream_type}}</h3>
                 <ul>
                     <li>quantity: {{order.quantity}}</li>
                     <li>size: {{order.size}} kg</li>
-                    <li>status: {{order.status}}</li>
-                    <li>type: {{order.type}}</li>
+                    <li>status: {{displayStatus(order.status)}}</li>
+                    <li>type: {{displayType(order.type)}}</li>
                 </ul>
                 <div class="btn-flex">
                     <button class="order-btn">Complete</button>
@@ -16,6 +18,9 @@
                 </div>
             </div>
             <div class="flip-card-back">
+                <div class="order-card-image round">
+                    <img :src="`../../img/orderImg_id${order.stream_product_id}.png`"  />
+                </div>
                 <h2>Choose Issue</h2>
                 <select name="issue" id="issue-type">
                   <option value="0">other</option>
@@ -40,6 +45,7 @@
         data(){
             return{
                 isRotated: false,
+                publicPath: process.env.BASE_URL,
             };
             
         },
@@ -51,7 +57,32 @@
                 else if(this.isRotated == true){
                     this.isRotated = false
                 }
-            }
+            },
+            displayStatus(statusId){
+                if(statusId == 0){
+                    return 'new';
+                }
+                else if(statusId == 1){
+                    return 'pending'
+                }
+                else if(statusId == 2){
+                    return 'scheduled'
+                }
+                else if(statusId == 3){
+                    return 'in progress'
+                }
+                else if(statusId == 4){
+                    return 'completed'
+                }
+            },
+            displayType(typeId){
+                if(typeId == 0){
+                    return 'pick up';
+                }
+                else if(typeId == 1){
+                    return 'drop off'
+                }
+            },
         }
     }
 </script>
@@ -62,7 +93,7 @@
     color: white;
     min-width: 320px;
     max-width: 500px;
-    height: 350px;
+    height: 520px;
     margin: 80px auto;
     perspective: 1000px;
 
@@ -87,6 +118,8 @@
  .order-btn{
     align-content: center;
     border: none;
+    background-color: #fff;
+    color: black;
     border-radius: 15px;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -112,6 +145,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    padding-bottom: 10px;
     transition: transform 0.8s;
     transform-style: preserve-3d;
     background: rgb(50,126,134);
@@ -119,12 +153,14 @@
 }
 
 .flip-card-inner-rotate {
-  transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 .flip-card-back {
-  color: white;
-  transform: rotateY(180deg);
+    color: white;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 
@@ -135,4 +171,11 @@
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
 }
+
+.order-card-image{
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
 </style>
