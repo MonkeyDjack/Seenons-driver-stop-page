@@ -3,6 +3,7 @@
         <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
         </div>
+        <Map :stopData="stopData" />
         <div class="stop-info" v-for="stop in stopData.stops" :key="stop.stop_id" >
             <div v-if="stop.stop_id == 2">
                 <p><img src="" alt=""></p>
@@ -26,6 +27,7 @@
 
 <script>
 import OrderCard from './OrderCard.vue'
+import Map from './Map.vue'
 export default{
     name: 'StopBody',
     props:{
@@ -33,6 +35,7 @@ export default{
     },
     components:{
         OrderCard,
+        Map,
     },
     
     methods:{
