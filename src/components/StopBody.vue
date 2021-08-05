@@ -3,9 +3,9 @@
         <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
         </div>
-        <Map :stopData="stopData" />
+        <Map @chooseStop="chooseStop" :stopData="stopData" />
         <div class="stop-info" v-for="stop in stopData.stops" :key="stop.stop_id" >
-            <div v-if="stop.stop_id == 2">
+            <div v-if="stop.stop_id == chosenStop">
                 <p><img src="" alt=""></p>
                 <p>Telephone:{{stop.telephone}} </p>
                 <p>House number:{{stop.address.house_number}} </p>
@@ -33,17 +33,20 @@ export default{
     props:{
         stopData: Object,
     },
+    data(){
+        return{
+        chosenStop: 1,
+    };
+},
     components:{
         OrderCard,
         Map,
     },
-    
     methods:{
-        //getStatusImg(id){
-        //    var images = require.context('../assets/img/', false, /\.png$/)
-        //    return images('./' + pet + ".png")
-        //}
-    }
+        chooseStop(id){
+            this.chosenStop = id
+        }
+    },
 };
 </script>
 
