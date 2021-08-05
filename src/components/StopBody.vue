@@ -1,4 +1,5 @@
 <template>
+  <Header :stopData="stopData" :chosenStop="chosenStop"/>
     <div class="stop-body round">
         <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
@@ -6,7 +7,7 @@
         <Map @chooseStop="chooseStop" :stopData="stopData" />
         <div class="stop-info" v-for="stop in stopData.stops" :key="stop.stop_id" >
             <div v-if="stop.stop_id == chosenStop">
-                <p><img src="" alt=""></p>
+                <h3>Comment: {{stop.comment}}</h3>
                 <p>Telephone:{{stop.telephone}} </p>
                 <p>House number:{{stop.address.house_number}} </p>
                 <p>Street: {{stop.address.street}}</p>
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import Header from './Header.vue'
 import OrderCard from './OrderCard.vue'
 import Map from './Map.vue'
 export default{
@@ -39,6 +41,7 @@ export default{
     };
 },
     components:{
+        Header,
         OrderCard,
         Map,
     },

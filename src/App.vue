@@ -1,16 +1,14 @@
 <template>
-  <Header :stopData="stopData"/>
   <StopBody :stopData="stopData"/>
 </template>
 
 <script>
-import Header from './components/Header.vue'
+
 import StopBody from './components/StopBody.vue'
 import stopData from "./json/driver_route_sample.json"
 export default {
   name: 'App',
   components: {
-    Header,
     StopBody,
   },
   data(){

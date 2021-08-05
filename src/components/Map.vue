@@ -61,5 +61,5 @@ import { onMounted } from '@vue/runtime-core'
 </script>
 
 <style scoped>
-#mapid { height: 400px; }
+#mapid { height: 400px; width: 80%; margin: 20px auto; padding: 40px; border-radius: 90px;  }
 </style>
