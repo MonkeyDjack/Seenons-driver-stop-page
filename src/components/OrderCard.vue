@@ -1,5 +1,5 @@
 <template>
-    <div class="order-card round-full clearfix" v-for="order in stop.orders" :key="order.order_id">
+    <div class="order-card round-full shadow-box"  v-for="order in stop.orders" :key="order.order_id">
         <div class="order-card-image round">
             <img :src="`../../img/orderImg_id${order.stream_product_id}.png`"  />
         </div>
@@ -12,7 +12,7 @@
         </ul>
         <div class="btn-flex">
             <button class="order-btn green-btn">Complete</button>
-            <button class="order-btn red-btn" >Send Issue</button>
+            <button class="order-btn red-btn"  v-on:click="$emit('togglePopup')" >Send Issue</button>
         </div>    
     </div>
 </template>
@@ -81,9 +81,6 @@ import ChangeValue from './ChangeValue.vue'
     padding-bottom: 20px;
     background: #F4FCFB;
     margin:20px;
-    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
     background: white;
 
  }
@@ -117,8 +114,13 @@ import ChangeValue from './ChangeValue.vue'
     width: 40%;
  }
 
-.card-issue{
-    visibility: hidden;
+.issue-card{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: auto;
+    background: linear-gradient(90deg, rgba(50,126,134,1) 0%, rgba(76,193,149,1) 100%);
 }
 
 

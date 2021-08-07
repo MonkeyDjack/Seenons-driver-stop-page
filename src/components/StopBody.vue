@@ -1,11 +1,25 @@
 <template>
+    <transition name="fade">
+    <Popup v-if="isPopup" :togglePopup="togglePopup"> 
+        <p><select name="pets" id="pet-select">
+                <option value="0">other</option>
+                <option value="1">wrong quantity ordered</option>
+                <option value="2">wrong container type</option>
+                <option value="3">container not accessible</option>
+            </select></p>
+            <p><textarea name="issue" cols="30" rows="10"></textarea></p>
+            <p><button @click="togglePopup">Send</button></p>
+    </Popup>
+    </transition>
     <div class="stop-body round">
         <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
         </div>
 
         <div class="stop-flex">
+            <transition name="fade">
             <Map @chooseStop="chooseStop" :stopData="stopData" />
+            </transition>
             <transition-group name="fade">
             <div class="stop-info round-border" v-for="stop in filteredStops" :key="stop.stop_id" >
                 <h3>{{stop.name}}</h3>
@@ -28,21 +42,25 @@
     </div>
     
         <div class="stop-flex"  v-for="stop in filteredStops" :key="stop.stop_id">
-           <OrderCard  :stop="stop" />
+           <OrderCard @togglePopup="togglePopup"  :stop="stop" />
+           
          </div>
 </template>
 
 <script>
 import OrderCard from './OrderCard.vue'
 import Map from './Map.vue'
+import Popup from './Popup.vue'
 export default{
     name: 'StopBody',
     props:{
         stopData: Object,
     },
+
     data(){
         return{
             chosenStop: null,
+            isPopup: false,
         };
     },
     computed:{
@@ -57,6 +75,7 @@ export default{
     components:{
         OrderCard,
         Map,
+        Popup,
     },
     methods:{
         chooseStop(id){
@@ -69,6 +88,9 @@ export default{
             else{
                 return value
             }
+        },
+        togglePopup(){
+           this.isPopup = !this.isPopup
         }
 
     },
@@ -122,10 +144,6 @@ export default{
 .fade-enter-active{
     transition: all 0.5s ease-in;
 }
-
-
-
-
 .stop-body-header{
     background: #F4FCFB;
    

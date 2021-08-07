@@ -9,11 +9,6 @@
         props:{
            change : Number,
         },
-        methods:{
-            changeinput(change){
-                console.log(change)
-            }
-        }
         
     }
 </script>
