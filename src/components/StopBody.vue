@@ -1,33 +1,38 @@
 <template>
-  <Header :stopData="stopData" :chosenStop="chosenStop"/>
     <div class="stop-body round">
         <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
         </div>
-        <Map @chooseStop="chooseStop" :stopData="stopData" />
-        <div class="stop-info" v-for="stop in stopData.stops" :key="stop.stop_id" >
-            <div v-if="stop.stop_id == chosenStop">
-                <h3>Comment: {{stop.comment}}</h3>
-                <p>Telephone:{{stop.telephone}} </p>
-                <p>House number:{{stop.address.house_number}} </p>
-                <p>Street: {{stop.address.street}}</p>
-                <p>Town: {{stop.address.town}}</p>
-                <p>Postal Code: {{stop.address.postal_code}}</p>
-                <p>Country: {{stop.address.country}}</p>
 
-                <div class="stop-body-header round">
-            <h2 class="poppins-font" >ORDERS</h2>
-        </div>
-            
-            <OrderCard :stop="stop" />
+        <div class="stop-flex">
+            <Map @chooseStop="chooseStop" :stopData="stopData" />
+            <transition-group name="fade">
+            <div class="stop-info round-border" v-for="stop in filteredStops" :key="stop.stop_id" >
+                <h3>{{stop.name}}</h3>
+                <span class="stop-underline"></span>
+                <p>Comment: {{filteredValue(stop.comment)}}</p>
+                <p>Telephone: <a :href='stop.telephone'>{{filteredValue(stop.telephone)}}</a> </p>
+                <p>House number: {{filteredValue(stop.address.house_number)}} </p>
+                <p>Street: {{filteredValue(stop.address.street)}}</p>
+                <p>Town: {{filteredValue(stop.address.town)}}</p>
+                <p>Postal Code: {{filteredValue(stop.address.postal_code)}}</p>
+                <p>Country: {{filteredValue(stop.address.country)}}</p>
+                  
+                
             </div>
-            
+            </transition-group>
+        </div>
+         <div class="stop-body-header round">
+             <h2 class="poppins-font" >ORDERS</h2>
         </div>
     </div>
+    
+        <div class="stop-flex"  v-for="stop in filteredStops" :key="stop.stop_id">
+           <OrderCard  :stop="stop" />
+         </div>
 </template>
 
 <script>
-import Header from './Header.vue'
 import OrderCard from './OrderCard.vue'
 import Map from './Map.vue'
 export default{
@@ -37,26 +42,87 @@ export default{
     },
     data(){
         return{
-        chosenStop: 1,
-    };
-},
+            chosenStop: null,
+        };
+    },
+    computed:{
+        filteredStops(){
+            let filterStop = this.stopData.stops
+            filterStop = filterStop.filter( stop => stop.stop_id === this.chosenStop)
+            return filterStop
+        },
+        
+    },
+
     components:{
-        Header,
         OrderCard,
         Map,
     },
     methods:{
         chooseStop(id){
             this.chosenStop = id
+        },
+        filteredValue(value){
+            if(value == null){
+                return ' -'
+            }
+            else{
+                return value
+            }
         }
+
     },
 };
 </script>
 
 <style scoped>
-.stop-body{
+
+.round-border{
+    border-radius: 40px;
+}
+.stop-underline{
+    height: 1px;
+    width: 100%;
+    margin: 10px 0;
+    display: block;
     background: #fff;
 }
+.stop-flex{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 30px 10px;
+}
+.stop-body{
+    background: white;
+}
+.stop-info{
+    padding: 20px;
+    width: 25%;
+    text-align: left;
+    padding-left: 20px;
+    background: rgb(50,126,134);
+    background: linear-gradient(90deg, rgba(50,126,134,1) 0%, rgba(76,193,149,1) 100%);
+    color: white;
+    height: 100%;
+    font-size: 12;
+    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+}
+
+.stop-info h3{
+    margin: 0;
+}
+
+.fade-enter-from{
+    opacity: 0;
+}
+
+.fade-enter-active{
+    transition: all 0.5s ease-in;
+}
+
 
 
 

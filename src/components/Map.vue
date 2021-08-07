@@ -1,12 +1,12 @@
 <template>
-    <div id="mapid"></div>
+    <div id="mapid" ref="map"></div>
 </template>
 
 <script>
 import leaflet from "leaflet"
 import { onMounted } from '@vue/runtime-core'
     export default{
-        name: Map,
+        name: 'Map',
         props:{
             stopData: Object,
         },
@@ -30,21 +30,43 @@ import { onMounted } from '@vue/runtime-core'
                     zoomOffset: -1,
                     accessToken: 'pk.eyJ1IjoibXVoaXRkaW4iLCJhIjoiY2tyeGNub2twMHBkbjJucHNmZndpN2k4NyJ9.YcpexF36dCDvDIORcLezXQ'
                 }).addTo(mymap);
+                
+                var stopMarkerIcon = leaflet.icon({ //add this new icon
+                    iconUrl: i+'.png',
+                    shadowUrl: 'leaf-shadow.png',
+
+                    iconSize:     [38, 95], // size of the icon
+                    shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+                console.log(stopMarkerIcon)
+
+                var garageMark = leaflet.marker([props.stopData.garage.address.lat, props.stopData.garage.address.lon])
+                garageMark.addTo(mymap).on('click', garageClicked)
+
+                function garageClicked(){
+                        console.log('garage')
+                    }
+
                 var i = 0;
-                var markers = []
+                var stops = []
                 props.stopData.stops.forEach(stop => {
                     
-                    var marker = leaflet.marker([stop.address.lat, stop.address.lon]);
+                    var stopMarker = leaflet.marker([stop.address.lat, stop.address.lon]);
                     
-                    markers.push(marker);
-                    markers[i].on('click', markerClicked);
-                    markers[i].addTo(mymap);
+                    stops.push(stopMarker);
+                    stops[i].on('click', stopClicked);
+                    stops[i].addTo(mymap);
                     
                     i++;
-                    function markerClicked(){
+                    function stopClicked(){
                         context.emit('chooseStop', stop.stop_id)
                         
                     }
+
+                    
                 })
 
                 
@@ -61,5 +83,14 @@ import { onMounted } from '@vue/runtime-core'
 </script>
 
 <style scoped>
-#mapid { height: 400px; width: 80%; margin: 20px auto; padding: 40px; border-radius: 90px;  }
+#mapid { 
+    height: 400px;
+    width: 65%;  
+    margin: 44px, 0; 
+    border-radius: 40px; 
+    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75); }
+
+
 </style>

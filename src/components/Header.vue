@@ -4,9 +4,7 @@
 
             <img src="../assets/img/avatar-empty.png" alt="avatar" class="avatar">
         </div>
-        <div v-for="stop in stopData.stops" :key="stop.stop_id">
-            <h2 class="place_name poppins-font"  v-if="stop.stop_id == chosenStop">{{stop.name}}</h2>
-        </div>
+            <h2 class="place_name poppins-font" >{{stopData.name}}</h2>
         
     </div>
 </template>
@@ -16,7 +14,6 @@ export default{
     name: 'Header',
     props:{
         stopData: Object,
-        chosenStop: Number,
     }
 };
 </script>

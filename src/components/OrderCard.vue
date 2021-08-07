@@ -1,50 +1,35 @@
 <template>
-    <div class="order-card round clearfix" v-for="order in stop.orders" :key="order.order_id">
-        <div  :class="[isRotated ? 'flip-card-inner-rotate' : '',  'flip-card-inner round clearfix']">
-            <div class="flip-card-front">
-                <div class="order-card-image round">
-                    <img :src="`../../img/orderImg_id${order.stream_product_id}.png`"  />
-                </div>
-                <h3>{{order.stream_type}}</h3>
-                <ul>
-                    <li>quantity: {{order.quantity}}</li>
-                    <li>size: {{order.size}} kg</li>
-                    <li>status: {{displayStatus(order.status)}}</li>
-                    <li>type: {{displayType(order.type)}}</li>
-                </ul>
-                <div class="btn-flex">
-                    <button class="order-btn">Complete</button>
-                    <button class="order-btn" @click="addClass()">Send Issue</button>
-                </div>
-            </div>
-            <div class="flip-card-back">
-                <div class="order-card-image round">
-                    <img :src="`../../img/orderImg_id${order.stream_product_id}.png`"  />
-                </div>
-                <h2>Choose Issue</h2>
-                <select name="issue" id="issue-type">
-                  <option value="0">other</option>
-                  <option value="1">wrong quantity ordered</option>
-                  <option value="2">wrong container type</option>
-                  <option value="3">container not accessible</option>
-                </select>
-                <h2>Add Comment</h2>
-                <textarea id="issue-type-comment" name="comment" rows="4" cols="50" />
-                <button class="order-btn" @click="addClass()">Send Issue</button>
-            </div>
+    <div class="order-card round-full clearfix" v-for="order in stop.orders" :key="order.order_id">
+        <div class="order-card-image round">
+            <img :src="`../../img/orderImg_id${order.stream_product_id}.png`"  />
         </div>
+        <h3>{{order.stream_type}}</h3>
+        <ul>
+            <li>quantity: <ChangeValue :change="order.quantity" /></li>
+            <li>size: {{order.size}} kg</li>
+            <li>status: {{displayStatus(order.status)}}</li>
+            <li>type: {{displayType(order.type)}}</li>
+        </ul>
+        <div class="btn-flex">
+            <button class="order-btn green-btn">Complete</button>
+            <button class="order-btn red-btn" >Send Issue</button>
+        </div>    
     </div>
 </template>
 
 <script>
+import ChangeValue from './ChangeValue.vue'
     export default{
         name: 'OrderCard',
         props:{
             stop: Object,
         },
+        components:{
+            ChangeValue,
+        },
         data(){
             return{
-                isRotated: false,
+                isIssue: false,
                 publicPath: process.env.BASE_URL,
             };
             
@@ -89,13 +74,17 @@
 
 <style scoped>
  .order-card{
-     position: relative;
-    color: white;
-    min-width: 320px;
-    max-width: 500px;
-    height: 520px;
-    margin: 80px auto;
-    perspective: 1000px;
+    position: relative;
+    color: black;
+    max-width: 40%;
+    min-width: 300px;
+    padding-bottom: 20px;
+    background: #F4FCFB;
+    margin:20px;
+    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    background: white;
 
  }
 
@@ -118,8 +107,7 @@
  .order-btn{
     align-content: center;
     border: none;
-    background-color: #fff;
-    color: black;
+    color: white;
     border-radius: 15px;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -129,48 +117,10 @@
     width: 40%;
  }
 
-
- .completed{
-     text-align: center;
-    opacity: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    background: rgb(50,126,134);
-    background: linear-gradient(90deg, rgba(50,126,134,1) 0%, rgba(76,193,149,1) 100%);
-
- }
-
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding-bottom: 10px;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-    background: rgb(50,126,134);
-    background: linear-gradient(90deg, rgba(50,126,134,1) 0%, rgba(76,193,149,1) 100%);
+.card-issue{
+    visibility: hidden;
 }
 
-.flip-card-inner-rotate {
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-
-.flip-card-back {
-    color: white;
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-
-
- .flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
-  backface-visibility: hidden;
-}
 
 .order-card-image{
     width: 100%;
