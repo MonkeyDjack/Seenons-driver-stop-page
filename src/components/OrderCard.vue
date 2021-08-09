@@ -133,6 +133,7 @@
     width: 20px;
     border:  none;
     height: auto;
+    font-size: 12px;
 }
 
 .complete{

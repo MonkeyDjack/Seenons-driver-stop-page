@@ -1,5 +1,5 @@
 <template>
-  <Header :stopData="stopData" :chosenStop="chosenStop"/>
+  <Header :stopData="stopData"/>
   <StopBody :stopData="stopData"/>
 </template>
 
