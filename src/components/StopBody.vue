@@ -1,50 +1,48 @@
 <template>
     <transition name="fade">
-    <Popup v-if="isPopup" :togglePopup="togglePopup"> 
-        <p><select name="pets" id="pet-select">
-                <option value="0">other</option>
-                <option value="1">wrong quantity ordered</option>
-                <option value="2">wrong container type</option>
-                <option value="3">container not accessible</option>
-            </select></p>
+        <Popup v-if="isPopup" :togglePopup="togglePopup"> 
+            <p><select name="pets" id="pet-select">
+                    <option value="0">other</option>
+                    <option value="1">wrong quantity ordered</option>
+                    <option value="2">wrong container type</option>
+                    <option value="3">container not accessible</option>
+                </select>
+            </p>
             <p><textarea name="issue" cols="30" rows="10"></textarea></p>
-            <p><button @click="togglePopup">Send</button></p>
-    </Popup>
+            <p><button @click="togglePopup" class="btn green-btn">Send</button></p>
+        </Popup>
     </transition>
     <div class="stop-body round">
         <div class="stop-body-header round">
             <h2 class="poppins-font" >Stop general information</h2>
         </div>
-
         <div class="stop-flex">
             <transition name="fade">
-            <Map @chooseStop="chooseStop" :stopData="stopData" />
+                <Map  @chooseStop="chooseStop" :stopData="stopData" />
             </transition>
             <transition-group name="fade">
-            <div class="stop-info round-border" v-for="stop in filteredStops" :key="stop.stop_id" >
-                <h3>{{stop.name}}</h3>
-                <span class="stop-underline"></span>
-                <p>Comment: {{filteredValue(stop.comment)}}</p>
-                <p>Telephone: <a :href='stop.telephone'>{{filteredValue(stop.telephone)}}</a> </p>
-                <p>House number: {{filteredValue(stop.address.house_number)}} </p>
-                <p>Street: {{filteredValue(stop.address.street)}}</p>
-                <p>Town: {{filteredValue(stop.address.town)}}</p>
-                <p>Postal Code: {{filteredValue(stop.address.postal_code)}}</p>
-                <p>Country: {{filteredValue(stop.address.country)}}</p>
-                  
-                
-            </div>
+                <div class="stop-info round-border" v-for="stop in filteredStops" :key="stop.stop_id" >
+                    <h3>{{stop.name}}</h3>
+                    <span class="stop-underline"></span>
+                    <p>Comment: {{filteredValue(stop.comment)}}</p>
+                    <p>Telephone: <span v-if="stop.telephone == null"> -</span> <a v-if="stop.telephone !== null" :href="'tel:'+stop.telephone">{{filteredValue(stop.telephone)}}</a> </p>
+                    <p>House number: {{filteredValue(stop.address.house_number)}} </p>
+                    <p>Street: {{filteredValue(stop.address.street)}}</p>
+                    <p>Town: {{filteredValue(stop.address.town)}}</p>
+                    <p>Postal Code: {{filteredValue(stop.address.postal_code)}}</p>
+                    <p>Country: {{filteredValue(stop.address.country)}}</p> 
+                </div>
             </transition-group>
         </div>
          <div class="stop-body-header round">
              <h2 class="poppins-font" >ORDERS</h2>
         </div>
     </div>
-    
-        <div class="stop-flex"  v-for="stop in filteredStops" :key="stop.stop_id">
-           <OrderCard @togglePopup="togglePopup"  :stop="stop" />
-           
-         </div>
+        <transition-group name="fade">
+            <div class="stop-flex"  v-for="stop in filteredStops" :key="stop.stop_id">
+                <OrderCard @togglePopup="togglePopup"  :stop="stop" />
+            </div>
+        </transition-group>
 </template>
 
 <script>
@@ -56,6 +54,7 @@ export default{
     props:{
         stopData: Object,
     },
+    emits:['togglePopup'],
 
     data(){
         return{
@@ -98,7 +97,9 @@ export default{
 </script>
 
 <style scoped>
-
+.map-flex-width{
+    width: 65%;  
+}
 .round-border{
     border-radius: 40px;
 }
@@ -137,13 +138,6 @@ export default{
     margin: 0;
 }
 
-.fade-enter-from{
-    opacity: 0;
-}
-
-.fade-enter-active{
-    transition: all 0.5s ease-in;
-}
 .stop-body-header{
     background: #F4FCFB;
    
@@ -154,4 +148,28 @@ export default{
     margin: 10px;
     color: black;
 }
+
+@media screen and (max-width:720px){
+	.map-flex-width{
+    width: 40%;
+  }
+  .stop-info{
+    width: 50%;
+  }
+
+}
+
+@media screen and (max-width:500px){
+	.map-flex-width{
+    width: 90%;
+    margin-bottom: 20px;
+  }
+  .stop-info{
+    width: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+
+}
+
 </style>

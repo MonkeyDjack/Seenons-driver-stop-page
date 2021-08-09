@@ -1,5 +1,6 @@
 <template>
-    <div id="mapid" ref="map"></div>
+    <div id="mapid" class="
+map-flex-width" ref="map"></div>
 </template>
 
 <script>
@@ -31,24 +32,9 @@ import { onMounted } from '@vue/runtime-core'
                     accessToken: 'pk.eyJ1IjoibXVoaXRkaW4iLCJhIjoiY2tyeGNub2twMHBkbjJucHNmZndpN2k4NyJ9.YcpexF36dCDvDIORcLezXQ'
                 }).addTo(mymap);
                 
-                var stopMarkerIcon = leaflet.icon({ //add this new icon
-                    iconUrl: i+'.png',
-                    shadowUrl: 'leaf-shadow.png',
 
-                    iconSize:     [38, 95], // size of the icon
-                    shadowSize:   [50, 64], // size of the shadow
-                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                    shadowAnchor: [4, 62],  // the same for the shadow
-                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                });
-                console.log(stopMarkerIcon)
-
-                var garageMark = leaflet.marker([props.stopData.garage.address.lat, props.stopData.garage.address.lon])
-                garageMark.addTo(mymap).on('click', garageClicked)
-
-                function garageClicked(){
-                        console.log('garage')
-                    }
+                //var garageMark = leaflet.marker([props.stopData.garage.address.lat, props.stopData.garage.address.lon])
+                //garageMark.addTo(mymap).on('click', garageClicked)
 
                 var i = 0;
                 var stops = []
@@ -85,7 +71,6 @@ import { onMounted } from '@vue/runtime-core'
 <style scoped>
 #mapid { 
     height: 400px;
-    width: 65%;  
     margin: 44px, 0; 
     border-radius: 40px; 
     z-index: 5;

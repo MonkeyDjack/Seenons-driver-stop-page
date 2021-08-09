@@ -67,4 +67,35 @@ body{
 .red-btn{
   background: #A63446;
 }
+
+.map-flex-width{
+  width: 65%;
+}
+
+.fade-enter-from{
+    opacity: 0;
+}
+
+.fade-enter-active{
+    transition: all 0.5s ease-in;
+}
+
+ .btn{
+    align-content: center;
+    border: none;
+    color: white;
+    border-radius: 15px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+    width: 40%;
+ }
+
+ .hide{
+   opacity: 0;
+   z-index: -1;
+   transition: 2s ease-in;
+ }
 </style>
